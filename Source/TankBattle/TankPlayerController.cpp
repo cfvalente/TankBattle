@@ -16,7 +16,7 @@ void ATankPlayerController::BeginPlay()
 	Super::BeginPlay();
 	if (GetControlledTank())
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Tank name: %s"), *GetControlledTank()->GetName());
+		UE_LOG(LogTemp, Warning, TEXT("Player Tank Name: %s"), *GetControlledTank()->GetName());
 	}
 	return;
 }
