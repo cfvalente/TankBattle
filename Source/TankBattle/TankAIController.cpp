@@ -31,9 +31,11 @@ void ATankAIController::BeginPlay()
 	{
 		UE_LOG(LogTemp, Warning, TEXT("AI Tank Name: %s"), *GetControlledTank()->GetName());
 		UE_LOG(LogTemp, Warning, TEXT("AI Tank - Reference to Player Tank: %s"), *GetPlayerTank()->GetName());
+		PlayerTank = GetPlayerTank();
 	}
 }
 void ATankAIController::Tick(float DeltaSeconds)
 {
 	Super::Tick(DeltaSeconds);
+	GetControlledTank()->AimAt(PlayerTank->GetActorLocation());
 }
