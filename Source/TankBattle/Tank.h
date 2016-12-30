@@ -25,6 +25,10 @@ public:
 	virtual void SetupPlayerInputComponent(class UInputComponent* InputComponent) override;
 
 	void AimAt(FVector HitLocation);
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, category = "Firing")
+	float LaunchSpeed = 100000;
+
 	
 protected:
 	UTankAimingComponent *TankAimingComponent = nullptr;

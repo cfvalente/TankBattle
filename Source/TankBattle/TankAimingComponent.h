@@ -21,6 +21,18 @@ public:
 	// Called every frame
 	virtual void TickComponent( float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction ) override;
 
-	void AimAt(FVector HitLocation);
-	
+	void AimAt(FVector HitLocation, float LaunchSpeed);
+
+	void SetBarrelLocation();
+	UFUNCTION(BlueprintCallable, category = "Setup")
+	void SetBarrelLocation(class UTankBarrel *Barrel);
+
+private:
+	class UTankBarrel *Barrel = nullptr;
+
+	void MoveBarrelTowards(FVector AimDirection);
+
+
+
+
 };

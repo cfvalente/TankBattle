@@ -1,6 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "TankBattle.h"
+#include "TankBarrel.h"
 #include "TankAimingComponent.h"
 
 
@@ -19,7 +20,6 @@ UTankAimingComponent::UTankAimingComponent()
 void UTankAimingComponent::BeginPlay()
 {
 	Super::BeginPlay();
-
 	// ...
 	
 }
@@ -29,14 +29,53 @@ void UTankAimingComponent::BeginPlay()
 void UTankAimingComponent::TickComponent( float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction )
 {
 	Super::TickComponent( DeltaTime, TickType, ThisTickFunction );
-
 	// ...
 }
 
 
-void UTankAimingComponent::AimAt(FVector HitLocation)
+void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
 {
-	FString OurTankName;
-	OurTankName = GetOwner()->GetName();
-	UE_LOG(LogTemp, Warning, TEXT("%s aiming at: %s"), *OurTankName, *HitLocation.ToString());
+	if (Barrel)
+	{
+		FString OurTankName;
+		OurTankName = GetOwner()->GetName();
+
+		FVector OutDirection;
+		FVector StartLocation = Barrel->GetSocketLocation(FName("Projectile"));
+
+		if (UGameplayStatics::SuggestProjectileVelocity(this, OutDirection, StartLocation, HitLocation, LaunchSpeed, false, 0.0f, 0.0f, ESuggestProjVelocityTraceOption::DoNotTrace))
+		{
+			FVector AimDirection = OutDirection.GetSafeNormal();
+			//UE_LOG(LogTemp, Warning, TEXT("%s aiming at: %s"), *OurTankName, *AimDirection.ToString());
+			MoveBarrelTowards(AimDirection);
+		}
+	}
+}
+
+void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection)
+{
+	FRotator BarrelRotator = Barrel->GetForwardVector().Rotation();
+	FRotator AimAsRotator = AimDirection.Rotation();
+	FRotator DeltaRotator = AimAsRotator - BarrelRotator;
+	//UE_LOG(LogTemp, Warning, TEXT("Aiming rotation: %s"), *AimAsRotator.ToString());
+	Barrel->Elevate(5.0f);
+}
+
+void UTankAimingComponent::SetBarrelLocation()
+{
+	for (UActorComponent *i : GetOwner()->GetComponentsByClass(UTankBarrel::StaticClass()))
+	{
+		if (i->GetName() == FString("Barrel"))
+		{
+			Barrel = Cast<UTankBarrel>(i);
+			return;
+		}
+	}
+	UE_LOG(LogTemp, Error, TEXT("Barrel not found."));
+	return;
+}
+
+void UTankAimingComponent::SetBarrelLocation(UTankBarrel *Barrel)
+{
+	this->Barrel = Barrel;
 }
