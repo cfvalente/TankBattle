@@ -8,5 +8,6 @@
 
 void UTankBarrel::Elevate(float DegreesPerSecond)
 {
-	UE_LOG(LogTemp, Warning, TEXT("Elevate Working"));
+	//float Time = GetWorld()->GetTimeSeconds();
+	//UE_LOG(LogTemp, Warning, TEXT("%f: Elevate Working"), Time);
 }
