@@ -2,6 +2,7 @@
 
 #pragma once
 
+#include "TankAimingComponent.h"
 #include "GameFramework/Pawn.h"
 #include "Tank.generated.h"
 
@@ -25,5 +26,6 @@ public:
 
 	void AimAt(FVector HitLocation);
 	
-	
+protected:
+	UTankAimingComponent *TankAimingComponent = nullptr;
 };
