@@ -2,6 +2,7 @@
 
 #include "TankBattle.h"
 #include "TankBarrel.h"
+#include "TankTurret.h"
 #include "TankAimingComponent.h"
 
 
@@ -66,7 +67,8 @@ void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection)
 	FRotator AimAsRotator = AimDirection.Rotation();
 	FRotator DeltaRotator = AimAsRotator - BarrelRotator;
 	//UE_LOG(LogTemp, Warning, TEXT("Aiming rotation: %s"), *AimAsRotator.ToString());
-	Barrel->Elevate(5.0f);
+	Barrel->Elevate(DeltaRotator.Pitch);
+	Turret->Rotate(DeltaRotator.Yaw);
 }
 
 void UTankAimingComponent::SetBarrelLocation()
@@ -86,4 +88,9 @@ void UTankAimingComponent::SetBarrelLocation()
 void UTankAimingComponent::SetBarrelLocation(UTankBarrel *Barrel)
 {
 	this->Barrel = Barrel;
+}
+
+void UTankAimingComponent::SetTurretLocation(UTankTurret *Turret)
+{
+	this->Turret = Turret;
 }

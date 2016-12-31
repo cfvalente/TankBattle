@@ -27,8 +27,12 @@ public:
 	UFUNCTION(BlueprintCallable, category = "Setup")
 	void SetBarrelLocation(class UTankBarrel *Barrel);
 
+	UFUNCTION(BlueprintCallable, category = "Setup")
+	void SetTurretLocation(class UTankTurret *Barrel);
+
 private:
 	class UTankBarrel *Barrel = nullptr;
+	class UTankTurret *Turret = nullptr;
 
 	void MoveBarrelTowards(FVector AimDirection);
 
