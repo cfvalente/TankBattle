@@ -36,4 +36,10 @@ void ATank::AimAt(FVector HitLocation)
 
 }
 
+void ATank::Fire()
+{
+	float Seconds = GetWorld()->GetTimeSeconds();
+	UE_LOG(LogTemp, Warning, TEXT("%f: Fire Ok"), Seconds);
+}
+
 
