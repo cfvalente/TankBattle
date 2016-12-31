@@ -28,6 +28,14 @@ public:
 
 	UFUNCTION(BlueprintCallable, category = "Controls")
 	void Fire();
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, category = "Firing")
+	TSubclassOf<class AProjectile> ProjectileBlueprint;
+
+	UFUNCTION(BlueprintCallable, category = "Setter")
+	void SetBarrel(class UTankBarrel *Barrel);
 protected:
 	UTankAimingComponent *TankAimingComponent = nullptr;
+	class UTankBarrel *Barrel = nullptr;
+
 };

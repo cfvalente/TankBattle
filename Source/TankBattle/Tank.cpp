@@ -1,6 +1,8 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "TankBattle.h"
+#include "TankBarrel.h"
+#include "Projectile.h"
 #include "Tank.h"
 
 
@@ -40,6 +42,13 @@ void ATank::Fire()
 {
 	float Seconds = GetWorld()->GetTimeSeconds();
 	UE_LOG(LogTemp, Warning, TEXT("%f: Fire Ok"), Seconds);
+	if (Barrel)
+	{
+		GetWorld()->SpawnActor<AProjectile>(ProjectileBlueprint, Barrel->GetSocketLocation("Projectile"), Barrel->GetSocketRotation("Projectile"));
+	}
 }
 
-
+void ATank::SetBarrel(UTankBarrel *Barrel)
+{
+	this->Barrel = Barrel;
+}
