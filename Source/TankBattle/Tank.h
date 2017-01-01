@@ -38,7 +38,8 @@ public:
 	UFUNCTION(BlueprintCallable, category = "Setter")
 	void SetBarrel(class UTankBarrel *Barrel);
 protected:
-	UTankAimingComponent *TankAimingComponent = nullptr;
+	class UTankAimingComponent *TankAimingComponent = nullptr;
+
 	class UTankBarrel *Barrel = nullptr;
 	double LastFireTime = -10000000.0f;
 
