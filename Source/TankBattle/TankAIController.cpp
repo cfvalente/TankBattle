@@ -37,5 +37,9 @@ void ATankAIController::BeginPlay()
 void ATankAIController::Tick(float DeltaSeconds)
 {
 	Super::Tick(DeltaSeconds);
-	GetControlledTank()->AimAt(PlayerTank->GetActorLocation());
+	if (ATank *ControlledTank = GetControlledTank())
+	{
+		ControlledTank->AimAt(PlayerTank->GetActorLocation());
+		ControlledTank->Fire();
+	}
 }
