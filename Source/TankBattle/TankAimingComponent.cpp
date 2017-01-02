@@ -37,7 +37,7 @@ void UTankAimingComponent::TickComponent( float DeltaTime, ELevelTick TickType, 
 	if (FiringState == EFiringState::Reloading && (FPlatformTime::Seconds() - LastFireTime) > FireRate)
 	{
 		IsReloaded = true;
-		FiringState = EFiringState::Ready;
+		FiringState = EFiringState::Moving;
 	}
 }
 

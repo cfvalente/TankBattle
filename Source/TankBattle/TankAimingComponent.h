@@ -14,6 +14,8 @@ enum class EFiringState : uint8
 };
 
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FStateChange);
+
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class TANKBATTLE_API UTankAimingComponent : public UActorComponent
@@ -44,6 +46,9 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, category = "Firing")
 	float FireRate = 3.0f;
+
+	//UPROPERTY(EditAnywhere, BlueprintReadWrite, category = "Firing")
+	//FStateChange StateChange;
 
 	void Fire(float LaunchSpeed, TSubclassOf<class AProjectile> ProjectileBlueprint);
 private:
