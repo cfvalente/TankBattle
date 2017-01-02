@@ -17,5 +17,5 @@ void UTankTrack::SetThrottle(float Throttle)
 	UStaticMeshComponent *TankRoot = Cast<UStaticMeshComponent>(GetOwner()->GetRootComponent());
 	TankRoot->AddForceAtLocation(AppliedForce, ForceLocation);
 	
-	UE_LOG(LogTemp, Warning, TEXT("%f: %s"), Time, *AppliedForce.ToString());
+	//UE_LOG(LogTemp, Warning, TEXT("%f: %s"), Time, *AppliedForce.ToString());
 }

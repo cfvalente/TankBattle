@@ -18,6 +18,9 @@ public:
 	ATank *GetControlledTank() const;
 	virtual void BeginPlay() override;
 	virtual void Tick(float DeltaSeconds) override;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	float AcceptanceRadius = 200.0f;
 private:
 	ATank *GetPlayerTank() const;
 	ATank *PlayerTank;
