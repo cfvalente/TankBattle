@@ -3,6 +3,7 @@
 #include "TankBattle.h"
 #include "TankBarrel.h"
 #include "TankTurret.h"
+#include "Projectile.h"
 #include "TankAimingComponent.h"
 
 
@@ -22,8 +23,10 @@ void UTankAimingComponent::BeginPlay()
 {
 	Super::BeginPlay();
 	// ...
-	
+	FiringState = EFiringState::Ready;
+
 }
+
 
 
 // Called every frame
@@ -31,6 +34,11 @@ void UTankAimingComponent::TickComponent( float DeltaTime, ELevelTick TickType, 
 {
 	Super::TickComponent( DeltaTime, TickType, ThisTickFunction );
 	// ...
+	if (FiringState == EFiringState::Reloading && (FPlatformTime::Seconds() - LastFireTime) > FireRate)
+	{
+		IsReloaded = true;
+		FiringState = EFiringState::Ready;
+	}
 }
 
 
@@ -69,6 +77,29 @@ void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection)
 	//UE_LOG(LogTemp, Warning, TEXT("Aiming rotation: %s"), *AimAsRotator.ToString());
 	Barrel->Elevate(DeltaRotator.Pitch);
 	Turret->Rotate(DeltaRotator.Yaw);
+	if (FiringState != EFiringState::Reloading)
+	{
+		if (!DeltaRotator.IsNearlyZero(0.1f))
+		{
+			FiringState = EFiringState::Moving;
+		}
+		else
+		{
+			FiringState = EFiringState::Ready;
+		}
+	}
+}
+
+void UTankAimingComponent::Fire(float LaunchSpeed, TSubclassOf<class AProjectile> ProjectileBlueprint)
+{
+	if (Barrel && IsReloaded)
+	{
+		IsReloaded = false;
+		LastFireTime = FPlatformTime::Seconds();
+		AProjectile *Projectile = GetWorld()->SpawnActor<AProjectile>(ProjectileBlueprint, Barrel->GetSocketLocation("Projectile"), Barrel->GetSocketRotation("Projectile"));
+		Projectile->LaunchProjectile(LaunchSpeed);
+		FiringState = EFiringState::Reloading;
+	}
 }
 
 void UTankAimingComponent::SetBarrelLocation()

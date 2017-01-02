@@ -5,6 +5,15 @@
 #include "Components/ActorComponent.h"
 #include "TankAimingComponent.generated.h"
 
+UENUM(BlueprintType)		//"BlueprintType" is essential to include
+enum class EFiringState : uint8
+{
+	Ready 		UMETA(DisplayName = "Ready"),
+	Moving 	UMETA(DisplayName = "Moving"),
+	Reloading		UMETA(DisplayName = "Reloading")
+};
+
+
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class TANKBATTLE_API UTankAimingComponent : public UActorComponent
@@ -30,11 +39,21 @@ public:
 	UFUNCTION(BlueprintCallable, category = "Setup")
 	void SetTurretLocation(class UTankTurret *Barrel);
 
+	UPROPERTY(BlueprintReadOnly, category = "Firing")
+	EFiringState FiringState;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, category = "Firing")
+	float FireRate = 3.0f;
+
+	void Fire(float LaunchSpeed, TSubclassOf<class AProjectile> ProjectileBlueprint);
 private:
 	class UTankBarrel *Barrel = nullptr;
 	class UTankTurret *Turret = nullptr;
 
 	void MoveBarrelTowards(FVector AimDirection);
+	double LastFireTime = -10000000.0f;
+
+	bool IsReloaded = true;
 
 
 

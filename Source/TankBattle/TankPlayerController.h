@@ -16,6 +16,7 @@ class TANKBATTLE_API ATankPlayerController : public APlayerController
 	
 	
 public:
+	UFUNCTION(BlueprintCallable, category = "Setup")
 	ATank *GetControlledTank() const;
 	virtual void BeginPlay() override;
 	virtual void Tick(float DeltaSeconds) override;

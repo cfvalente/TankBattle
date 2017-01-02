@@ -2,7 +2,6 @@
 
 #include "TankBattle.h"
 #include "TankBarrel.h"
-#include "Projectile.h"
 #include "TankMovementComponent.h"
 #include "Tank.h"
 
@@ -41,17 +40,7 @@ void ATank::AimAt(FVector HitLocation)
 
 void ATank::Fire()
 {
-	bool IsReloaded = false;
-	if ((FPlatformTime::Seconds() - LastFireTime) > FireRate)
-	{
-		IsReloaded = true;
-		LastFireTime = FPlatformTime::Seconds();
-	}
-	if (Barrel && IsReloaded)
-	{
-		AProjectile *Projectile = GetWorld()->SpawnActor<AProjectile>(ProjectileBlueprint, Barrel->GetSocketLocation("Projectile"), Barrel->GetSocketRotation("Projectile"));
-		Projectile->LaunchProjectile(LaunchSpeed);
-	}
+	TankAimingComponent->Fire(LaunchSpeed, ProjectileBlueprint);
 }
 
 void ATank::SetBarrel(UTankBarrel *Barrel)

@@ -26,9 +26,6 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, category = "Firing")
 	float LaunchSpeed = 100000;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, category = "Firing")
-	float FireRate = 3.0f;
-
 	UFUNCTION(BlueprintCallable, category = "Controls")
 	void Fire();
 
@@ -41,6 +38,5 @@ protected:
 	class UTankAimingComponent *TankAimingComponent = nullptr;
 
 	class UTankBarrel *Barrel = nullptr;
-	double LastFireTime = -10000000.0f;
 
 };
