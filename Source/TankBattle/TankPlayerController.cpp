@@ -1,6 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "TankBattle.h"
+#include "TankAimingComponent.h"
 #include "TankPlayerController.h"
 
 
@@ -18,6 +19,19 @@ void ATankPlayerController::BeginPlay()
 	{
 		UE_LOG(LogTemp, Warning, TEXT("Player Tank Name: %s"), *GetControlledTank()->GetName());
 		InitScreenLocation();
+		/*TArray<UTankAimingComponent *> Comps;
+		GetControlledTank()->GetComponents(Comps);
+		if (Comps.Num() > 0)*/
+		UTankAimingComponent *AutoComponent = GetControlledTank()->FindComponentByClass<UTankAimingComponent>();
+		if(AutoComponent)
+		{
+			TankAimingComponent = AutoComponent;
+			FoundAimingComponent(TankAimingComponent);
+		}
+		else
+		{
+			UE_LOG(LogTemp, Error, TEXT("Player Tank Name: %s -- Aiming Component Not Found!"), *GetControlledTank()->GetName());
+		}
 	}
 }
 

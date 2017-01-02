@@ -27,6 +27,13 @@ public:
 	float CrossHairYLocation = 0.3333f;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	float LineTraceRange = 1000000.0f;
+
+
+	UFUNCTION(BlueprintImplementableEvent, category = "Setup")
+	void FoundAimingComponent(UTankAimingComponent *AimCompRef);
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, category = "Setup")
+	class UTankAimingComponent *TankAimingComponent = nullptr;
 private:
 	void AimTowardsCrossHair();
 	bool GetSightRayHitLocation(FVector &HitLocation) const;

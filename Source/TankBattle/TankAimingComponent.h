@@ -47,6 +47,8 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, category = "Firing")
 	float FireRate = 3.0f;
 
+	
+
 	//UPROPERTY(EditAnywhere, BlueprintReadWrite, category = "Firing")
 	//FStateChange StateChange;
 
