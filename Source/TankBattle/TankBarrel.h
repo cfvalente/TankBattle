@@ -15,7 +15,7 @@ class TANKBATTLE_API UTankBarrel : public UStaticMeshComponent
 
 public:
 	void Elevate(float RelativeSpeed);
-	
+
 private:
 	UPROPERTY(EditAnywhere)
 	float MaxDegreesPerSecond = 20.0f;
