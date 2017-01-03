@@ -74,9 +74,14 @@ void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection)
 	FRotator BarrelRotator = Barrel->GetForwardVector().Rotation();
 	FRotator AimAsRotator = AimDirection.Rotation();
 	FRotator DeltaRotator = AimAsRotator - BarrelRotator;
+	float Pitch = DeltaRotator.Pitch;
+	float Yaw = DeltaRotator.Yaw;
+	//if (Pitch > 180.0f) Pitch = Pitch - 360.0f;
+	if (Yaw > 180.0f) Yaw = Yaw - 360.0f;
+	if (Yaw < -180.0f) Yaw = 360 + Yaw;
 	//UE_LOG(LogTemp, Warning, TEXT("Aiming rotation: %s"), *AimAsRotator.ToString());
-	Barrel->Elevate(DeltaRotator.Pitch);
-	Turret->Rotate(DeltaRotator.Yaw);
+	Barrel->Elevate(Pitch);
+	Turret->Rotate(Yaw);
 	if (FiringState != EFiringState::Reloading)
 	{
 		if (!DeltaRotator.IsNearlyZero(0.1f))

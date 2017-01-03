@@ -20,6 +20,9 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	float AcceptanceRadius = 200.0f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	FVector AimingOffset = FVector::ZeroVector;
 private:
 	class ATank *GetPlayerTank() const;
 	class ATank *PlayerTank;

@@ -51,7 +51,14 @@ void ATankAIController::Tick(float DeltaSeconds)
 	if (ATank *ControlledTank = GetControlledTank())
 	{
 		MoveToActor(PlayerTank, AcceptanceRadius);
-		TankAimingComponent->AimAt(PlayerTank->GetActorLocation());
-		TankAimingComponent->Fire();
+		//FString Location = ControlledTank->GetActorLocation().ToString();
+		//FString Target = PlayerTank->GetActorLocation().ToString();
+		//float dist = FVector::Dist(ControlledTank->GetActorLocation(),PlayerTank->GetActorLocation());
+		//UE_LOG(LogTemp, Warning, TEXT("\nLocation: %s\nTarget: %s\n Distance: %f"), *Location, *Target, dist);
+		TankAimingComponent->AimAt(PlayerTank->GetActorLocation()+AimingOffset);
+		if (TankAimingComponent->FiringState == EFiringState::Ready)
+		{
+			TankAimingComponent->Fire();
+		}
 	}
 }

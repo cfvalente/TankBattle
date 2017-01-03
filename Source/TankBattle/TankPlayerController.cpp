@@ -49,6 +49,7 @@ void ATankPlayerController::AimTowardsCrossHair()
 	{
 		TankAimingComponent->AimAt(HitLocation);
 	}
+	//else UE_LOG(LogTemp, Warning, TEXT("Aiming Solution not Found!"));
 
 }
 void ATankPlayerController::InitScreenLocation()
