@@ -10,7 +10,8 @@ enum class EFiringState : uint8
 {
 	Ready 		UMETA(DisplayName = "Ready"),
 	Moving 	UMETA(DisplayName = "Moving"),
-	Reloading		UMETA(DisplayName = "Reloading")
+	Reloading		UMETA(DisplayName = "Reloading"),
+	OutOfAmmo UMETA(DisplayName = "OutOfAmmo")
 };
 
 
@@ -49,6 +50,9 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, category = "Firing")
 	float LaunchSpeed = 100000;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, category = "Firing")
+	int32 Ammo = 10;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, category = "Firing")
 	TSubclassOf<class AProjectile> ProjectileBlueprint;

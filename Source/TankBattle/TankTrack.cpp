@@ -9,12 +9,13 @@
 UTankTrack::UTankTrack()
 {
 	PrimaryComponentTick.bCanEverTick = true;
+	OnComponentHit.AddDynamic(this, &UTankTrack::OnHit);
+
 }
 
 void UTankTrack::BeginPlay()
 {
 	//Super::BeginPlay();
-	OnComponentHit.AddDynamic(this, &UTankTrack::OnHit);
 }
 
 void UTankTrack::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)

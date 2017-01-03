@@ -82,7 +82,7 @@ void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection)
 	//UE_LOG(LogTemp, Warning, TEXT("Aiming rotation: %s"), *AimAsRotator.ToString());
 	Barrel->Elevate(Pitch);
 	Turret->Rotate(Yaw);
-	if (FiringState != EFiringState::Reloading)
+	if (FiringState != EFiringState::Reloading && FiringState != EFiringState::OutOfAmmo)
 	{
 		if (!DeltaRotator.IsNearlyZero(0.1f))
 		{
@@ -97,13 +97,15 @@ void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection)
 
 void UTankAimingComponent::Fire()
 {
-		if (Barrel && IsReloaded && ProjectileBlueprint != nullptr)
+		if (Barrel && IsReloaded && ProjectileBlueprint != nullptr && FiringState != EFiringState::OutOfAmmo)
 		{
 			IsReloaded = false;
 			LastFireTime = FPlatformTime::Seconds();
 			AProjectile *Projectile = GetWorld()->SpawnActor<AProjectile>(ProjectileBlueprint, Barrel->GetSocketLocation("Projectile"), Barrel->GetSocketRotation("Projectile"));
 			Projectile->LaunchProjectile(LaunchSpeed);
 			FiringState = EFiringState::Reloading;
+			Ammo--;
+			if (Ammo == 0) FiringState = EFiringState::OutOfAmmo;
 		}
 }
 
