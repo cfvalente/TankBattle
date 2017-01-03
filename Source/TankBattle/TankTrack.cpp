@@ -9,6 +9,7 @@
 void UTankTrack::SetThrottle(float Throttle)
 {
 	auto Time = GetWorld()->GetTimeSeconds();
+	FString TankName = GetOwner()->GetName();
 	//UE_LOG(LogTemp, Warning, TEXT("%f: %f"), Time, Throttle);
 
 	FVector AppliedForce = GetForwardVector() * Throttle * TrackMaxForce;
@@ -17,5 +18,5 @@ void UTankTrack::SetThrottle(float Throttle)
 	UStaticMeshComponent *TankRoot = Cast<UStaticMeshComponent>(GetOwner()->GetRootComponent());
 	TankRoot->AddForceAtLocation(AppliedForce, ForceLocation);
 	
-	//UE_LOG(LogTemp, Warning, TEXT("%f: %s"), Time, *AppliedForce.ToString());
+	//UE_LOG(LogTemp, Warning, TEXT("%f: %s --> %s"), Time, *TankName, *AppliedForce.ToString());
 }

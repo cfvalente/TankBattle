@@ -50,8 +50,8 @@ void ATankAIController::Tick(float DeltaSeconds)
 	Super::Tick(DeltaSeconds);
 	if (ATank *ControlledTank = GetControlledTank())
 	{
-		//MoveToActor(PlayerTank, AcceptanceRadius);
-		//TankAimingComponent->AimAt(PlayerTank->GetActorLocation());
-		//TankAimingComponent->Fire();
+		MoveToActor(PlayerTank, AcceptanceRadius);
+		TankAimingComponent->AimAt(PlayerTank->GetActorLocation());
+		TankAimingComponent->Fire();
 	}
 }
