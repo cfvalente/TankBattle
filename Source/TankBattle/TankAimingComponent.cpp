@@ -42,7 +42,7 @@ void UTankAimingComponent::TickComponent( float DeltaTime, ELevelTick TickType, 
 }
 
 
-void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
+void UTankAimingComponent::AimAt(FVector HitLocation)
 {
 	if (Barrel)
 	{
@@ -90,16 +90,16 @@ void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection)
 	}
 }
 
-void UTankAimingComponent::Fire(float LaunchSpeed, TSubclassOf<class AProjectile> ProjectileBlueprint)
+void UTankAimingComponent::Fire()
 {
-	if (Barrel && IsReloaded)
-	{
-		IsReloaded = false;
-		LastFireTime = FPlatformTime::Seconds();
-		AProjectile *Projectile = GetWorld()->SpawnActor<AProjectile>(ProjectileBlueprint, Barrel->GetSocketLocation("Projectile"), Barrel->GetSocketRotation("Projectile"));
-		Projectile->LaunchProjectile(LaunchSpeed);
-		FiringState = EFiringState::Reloading;
-	}
+		if (Barrel && IsReloaded && ProjectileBlueprint != nullptr)
+		{
+			IsReloaded = false;
+			LastFireTime = FPlatformTime::Seconds();
+			AProjectile *Projectile = GetWorld()->SpawnActor<AProjectile>(ProjectileBlueprint, Barrel->GetSocketLocation("Projectile"), Barrel->GetSocketRotation("Projectile"));
+			Projectile->LaunchProjectile(LaunchSpeed);
+			FiringState = EFiringState::Reloading;
+		}
 }
 
 void UTankAimingComponent::SetBarrelLocation()

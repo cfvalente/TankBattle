@@ -2,7 +2,6 @@
 
 #pragma once
 
-#include "Tank.h"
 #include "GameFramework/PlayerController.h"
 #include "TankPlayerController.generated.h"
 
@@ -17,7 +16,7 @@ class TANKBATTLE_API ATankPlayerController : public APlayerController
 	
 public:
 	UFUNCTION(BlueprintCallable, category = "Setup")
-	ATank *GetControlledTank() const;
+	class ATank *GetControlledTank() const;
 	virtual void BeginPlay() override;
 	virtual void Tick(float DeltaSeconds) override;
 
@@ -30,7 +29,7 @@ public:
 
 
 	UFUNCTION(BlueprintImplementableEvent, category = "Setup")
-	void FoundAimingComponent(UTankAimingComponent *AimCompRef);
+	void FoundAimingComponent(class UTankAimingComponent *AimCompRef);
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, category = "Setup")
 	class UTankAimingComponent *TankAimingComponent = nullptr;

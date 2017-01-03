@@ -32,7 +32,7 @@ public:
 	// Called every frame
 	virtual void TickComponent( float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction ) override;
 
-	void AimAt(FVector HitLocation, float LaunchSpeed);
+	void AimAt(FVector HitLocation);
 
 	void SetBarrelLocation();
 	UFUNCTION(BlueprintCallable, category = "Setup")
@@ -47,12 +47,16 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, category = "Firing")
 	float FireRate = 3.0f;
 
-	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, category = "Firing")
+	float LaunchSpeed = 100000;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, category = "Firing")
+	TSubclassOf<class AProjectile> ProjectileBlueprint;
 	//UPROPERTY(EditAnywhere, BlueprintReadWrite, category = "Firing")
 	//FStateChange StateChange;
 
-	void Fire(float LaunchSpeed, TSubclassOf<class AProjectile> ProjectileBlueprint);
+	UFUNCTION(BlueprintCallable, category = "Firing")
+	void Fire();
 private:
 	class UTankBarrel *Barrel = nullptr;
 	class UTankTurret *Turret = nullptr;

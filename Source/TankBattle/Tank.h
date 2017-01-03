@@ -2,7 +2,6 @@
 
 #pragma once
 
-#include "TankAimingComponent.h"
 #include "GameFramework/Pawn.h"
 #include "Tank.generated.h"
 
@@ -20,23 +19,5 @@ public:
 	
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* InputComponent) override;
-
-	void AimAt(FVector HitLocation);
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, category = "Firing")
-	float LaunchSpeed = 100000;
-
-	UFUNCTION(BlueprintCallable, category = "Controls")
-	void Fire();
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, category = "Firing")
-	TSubclassOf<class AProjectile> ProjectileBlueprint;
-
-	UFUNCTION(BlueprintCallable, category = "Setter")
-	void SetBarrel(class UTankBarrel *Barrel);
-protected:
-	class UTankAimingComponent *TankAimingComponent = nullptr;
-
-	class UTankBarrel *Barrel = nullptr;
 
 };
