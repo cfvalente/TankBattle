@@ -24,5 +24,14 @@ public:
 
 protected:
 	UProjectileMovementComponent *ProjectileMovementComponent = nullptr;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, category = "Projectile")
+	UStaticMeshComponent *CollisionMesh = nullptr;
+
+	UPROPERTY(VisibleAnywhere, category = "Projectile") UParticleSystemComponent *LaunchBlast = nullptr;
+	UPROPERTY(VisibleAnywhere, category = "Projectile") UParticleSystemComponent *ImpactBlast = nullptr;
+
+	UFUNCTION() void Finished(class UParticleSystemComponent* PSystem);
+	UFUNCTION() void Hit(UPrimitiveComponent *HitComponent, AActor *OtherActor, UPrimitiveComponent *OtherComp, FVector NormalImpulse, const FHitResult &Hit);
 	
 };

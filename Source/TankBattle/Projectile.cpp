@@ -11,6 +11,31 @@ AProjectile::AProjectile()
 	PrimaryActorTick.bCanEverTick = true;
 	ProjectileMovementComponent = CreateDefaultSubobject<UProjectileMovementComponent>(FName("Movement Component"));
 	ProjectileMovementComponent->bAutoActivate = false;
+
+	CollisionMesh = CreateDefaultSubobject<UStaticMeshComponent>(FName("Collision Component"));
+	SetRootComponent(CollisionMesh);
+	CollisionMesh->SetNotifyRigidBodyCollision(true);
+	CollisionMesh->SetVisibility(false);
+
+	LaunchBlast = CreateDefaultSubobject<UParticleSystemComponent>(FName("Launch Component"));
+	LaunchBlast->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
+	LaunchBlast->bAutoActivate = false;
+
+	ImpactBlast = CreateDefaultSubobject<UParticleSystemComponent>(FName("Impact Component"));
+	ImpactBlast->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
+	ImpactBlast->bAutoActivate = false;
+	ImpactBlast->OnSystemFinished.AddDynamic(this, &AProjectile::Finished);
+	CollisionMesh->OnComponentHit.AddDynamic(this, &AProjectile::Hit);
+}
+
+void AProjectile::Hit(UPrimitiveComponent *HitComponent, AActor *OtherActor, UPrimitiveComponent *OtherComp, FVector NormalImpulse, const FHitResult &Hit)
+{
+	ImpactBlast->Activate();
+}
+
+void AProjectile::Finished(class UParticleSystemComponent* PSystem)
+{
+	Destroy();
 }
 
 // Called when the game starts or when spawned
@@ -33,4 +58,5 @@ void AProjectile::LaunchProjectile(float Speed)
 	//UE_LOG(LogTemp, Warning, TEXT("%f: Fire Ok"), Seconds);
 	ProjectileMovementComponent->SetVelocityInLocalSpace(FVector::ForwardVector * Speed);
 	ProjectileMovementComponent->Activate();
+	LaunchBlast->Activate();
 }
