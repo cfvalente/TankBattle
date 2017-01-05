@@ -49,6 +49,7 @@ float ATank::TakeDamage(float DamageAmount, struct FDamageEvent const &DamageEve
 		FTimerHandle Timer;
 		GetWorld()->GetTimerManager().SetTimer(Timer, this, &ATank::OnTimer, SecondsToDie, false);
 		GetRootComponent()->SetVisibility(false, true);
+		DetachFromControllerPendingDestroy();
 		//Destroy();
 	}
 	else HitPoints -= DamageAmount;
