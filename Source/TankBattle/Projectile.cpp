@@ -15,11 +15,14 @@ AProjectile::AProjectile()
 	CollisionMesh = CreateDefaultSubobject<UStaticMeshComponent>(FName("Collision Component"));
 	SetRootComponent(CollisionMesh);
 	CollisionMesh->SetNotifyRigidBodyCollision(true);
-	CollisionMesh->SetVisibility(false);
+	CollisionMesh->SetVisibility(true);
 
 	LaunchBlast = CreateDefaultSubobject<UParticleSystemComponent>(FName("Launch Component"));
 	LaunchBlast->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
 	LaunchBlast->bAutoActivate = false;
+
+	ExplosionForce = CreateDefaultSubobject<URadialForceComponent>(FName("Explosion Force"));
+	ExplosionForce->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
 
 	ImpactBlast = CreateDefaultSubobject<UParticleSystemComponent>(FName("Impact Component"));
 	ImpactBlast->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
@@ -30,7 +33,20 @@ AProjectile::AProjectile()
 
 void AProjectile::Hit(UPrimitiveComponent *HitComponent, AActor *OtherActor, UPrimitiveComponent *OtherComp, FVector NormalImpulse, const FHitResult &Hit)
 {
+	ProjectileMovementComponent->SetVelocityInLocalSpace(FVector::ZeroVector);
 	ImpactBlast->Activate();
+	ExplosionForce->FireImpulse();
+
+	UGameplayStatics::ApplyRadialDamage(this, DamageDealt, GetActorLocation(), ExplosionForce->Radius, UDamageType::StaticClass(), TArray<AActor*>());
+	//FTimerHandle Timer;
+	//UE_LOG(LogTemp, Warning, TEXT("OnHit!"));
+	//GetWorld()->GetTimerManager().SetTimer(Timer, this, &AProjectile::OnTimer, Delay, false);
+}
+
+void AProjectile::OnTimer()
+{
+	//UE_LOG(LogTemp, Warning, TEXT("Timer!"));
+	return;
 }
 
 void AProjectile::Finished(class UParticleSystemComponent* PSystem)

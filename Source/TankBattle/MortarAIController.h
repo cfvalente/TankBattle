@@ -21,6 +21,11 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	FVector AimingOffset = FVector::ZeroVector;
+
+
+protected:
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, category = "Setup")
+	float HitPoints = 35.0f;
 private:
 	void GetPlayerTank();
 	class ATank *PlayerTank = nullptr;

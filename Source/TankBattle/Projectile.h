@@ -31,7 +31,16 @@ protected:
 	UPROPERTY(VisibleAnywhere, category = "Projectile") UParticleSystemComponent *LaunchBlast = nullptr;
 	UPROPERTY(VisibleAnywhere, category = "Projectile") UParticleSystemComponent *ImpactBlast = nullptr;
 
+	UPROPERTY(VisibleAnywhere, category = "Projectile") URadialForceComponent *ExplosionForce = nullptr;
+
+	UPROPERTY(EditDefaultsOnly, category = "Projectile") float DamageDealt = 10.0f;
+
 	UFUNCTION() void Finished(class UParticleSystemComponent* PSystem);
 	UFUNCTION() void Hit(UPrimitiveComponent *HitComponent, AActor *OtherActor, UPrimitiveComponent *OtherComp, FVector NormalImpulse, const FHitResult &Hit);
+
+	UFUNCTION() void OnTimer();
+
+	UPROPERTY(EditDefaultsOnly, category = "Setup")
+	float Delay = 0.5f;
 	
 };
